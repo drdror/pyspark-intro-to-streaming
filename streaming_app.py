@@ -1,3 +1,5 @@
+import time  # Import the time module
+
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, length
 from pyspark.sql.types import IntegerType, StringType, StructField, StructType
@@ -35,5 +37,30 @@ if __name__ == "__main__":
         .start()
     )
 
-    # Wait for the stream to terminate (e.g., by manual interruption)
-    query.awaitTermination()
+    # Monitor the stream and stop after 60 seconds of inactivity
+    print("Streaming query started. Monitoring for inactivity...")
+    last_data_timestamp = time.time()
+    timeout_seconds = 20
+
+    while query.isActive:
+        current_progress = query.lastProgress
+        if current_progress and current_progress["numInputRows"] > 0:
+            # Data was processed, reset the timer
+            last_data_timestamp = time.time()
+            print(
+                f"Processed {current_progress['numInputRows']} rows. Resetting inactivity timer."
+            )
+        else:
+            # No data processed in the last trigger interval
+            elapsed_time = time.time() - last_data_timestamp
+            if elapsed_time > timeout_seconds:
+                print(
+                    f"No new data received for {timeout_seconds} seconds. Stopping the stream."
+                )
+                query.stop()
+                break  # Exit the monitoring loop
+
+        # Wait for a short interval before checking again
+        time.sleep(5)  # Check every 5 seconds
+
+    print("Streaming query stopped.")
