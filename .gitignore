@@ -1,2 +1,5 @@
 .venv/
-data/
+
+data/lz
+data/output
+data/checkpoint
