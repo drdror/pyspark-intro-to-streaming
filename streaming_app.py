@@ -17,7 +17,7 @@ if __name__ == "__main__":
     )
 
     # Define input and output paths
-    input_path = "data/input"
+    input_path = "data/lz"
     output_path = "data/output"
     checkpoint_location = "data/checkpoint"  # Checkpoint directory for fault tolerance
 
