@@ -1,5 +1,7 @@
 # Getting Started with Streaming using PySpark
 
+<img src="image.png" alt="drawing" width="230"/>
+
 ## Virtual Environment Setup
 
 The usual:
