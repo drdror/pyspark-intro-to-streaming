@@ -1,5 +1,8 @@
 .venv/
 
-data/lz
-data/output
-data/checkpoint
+data/lz/*
+!data/lz/.gitkeep
+data/output/*
+!data/output/.gitkeep
+data/checkpoint/*
+!data/checkpoint/.gitkeep

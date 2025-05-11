@@ -40,7 +40,7 @@ if __name__ == "__main__":
     # Monitor the stream and stop after 60 seconds of inactivity
     print("Streaming query started. Monitoring for inactivity...")
     last_data_timestamp = time.time()
-    timeout_seconds = 20
+    timeout_seconds = 60
 
     while query.isActive:
         current_progress = query.lastProgress
